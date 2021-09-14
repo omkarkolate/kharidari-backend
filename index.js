@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const initDatabaseConnection = require('./database/database.connect.js');
-
+const port = process.env.PORT || 3000;
 const app = express();
 
 const corsOptions = {
@@ -41,6 +41,6 @@ app.use("/orders", order);
 app.use(routeNotFound);
 app.use(errorHandler)
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('server started');
 });
