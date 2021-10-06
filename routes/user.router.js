@@ -28,4 +28,22 @@ router.route("/:userId")
         }
     })
 
+router.route("/change-password/:userId")
+    .put(async (req, res) => {
+        try{
+            const user = req.user;
+            const {oldPassword, newPassword} = req.body;
+
+            if(user.password === oldPassword) {
+                user.password = newPassword;
+                await user.save();
+                res.status(200).json({ success: true, message: "Password Changed Succesfully" });
+            } else {
+                throw new Error("Old password is not matched.")
+            }
+        } catch(error) {
+            res.status(500).json({ success: false, message: "Error while changing the password.", error: error.message })
+        }
+    })
+
 module.exports = router;
